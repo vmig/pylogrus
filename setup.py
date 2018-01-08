@@ -5,7 +5,7 @@ _ROOT = os.path.dirname(os.path.realpath(__file__))
 
 
 def readme():
-    with open(os.path.join(_ROOT, 'README.md')) as f:
+    with open(os.path.join(_ROOT, 'README.rst')) as f:
         return '\n' + f.read()
 
 
@@ -24,7 +24,7 @@ def find_requirements(testing=False):
 
 setup(
     name="pylogrus",
-    version="0.3.0",
+    version="0.3.1",
     description="PyLogrus is a structured logger for Python which is inspired by Logrus Golang library",
     long_description=readme(),
     author="Vitalii Myhal",
