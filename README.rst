@@ -27,13 +27,9 @@ Using this package, you will be able to:
 .. figure:: https://github.com/vmig/pylogrus/blob/master/examples/screenshot.png?raw=true
    :alt: Colored
 
-   Colored
-
-Quick start
------------
 
 Initialization
-~~~~~~~~~~~~~~
+--------------
 
 .. code:: python
 
@@ -42,12 +38,12 @@ Initialization
 
     logging.setLoggerClass(PyLogrus)
 
+
 Formatters
-~~~~~~~~~~
+----------
 
 TextFormatter
-^^^^^^^^^^^^^
-
+~~~~~~~~~~~~~
 TextFormatter class allows colorizing console output by setting a
 ``colorize`` argument. The colorization can be switched off. Time of log
 record may be set in Zulu format. Just set ``datefmt`` argument as 'Z'.
@@ -69,9 +65,9 @@ record may be set in Zulu format. Just set ``datefmt`` argument as 'Z'.
     ch.setFormatter(formatter)
     logger.addHandler(ch)
 
-Overriding name of levels
-'''''''''''''''''''''''''
 
+Overriding name of levels
+^^^^^^^^^^^^^^^^^^^^^^^^^
 You can define only necessary changes:
 
 .. code:: python
@@ -85,9 +81,9 @@ or for instance:
 
     formatter.override_level_names({'CRITICAL': 'FATAL'})
 
-Overriding colors
-'''''''''''''''''
 
+Overriding colors
+^^^^^^^^^^^^^^^^^
 TextFormatter has several base elements which can be colorized. You can
 get them via ``color`` property:
 
@@ -117,9 +113,9 @@ define new color only for those elements you need.
     formatter = TextFormatter(colorize=True)
     formatter.override_colors({'prefix': CL_BLDYLW})
 
-JsonFormatter
-^^^^^^^^^^^^^
 
+JsonFormatter
+~~~~~~~~~~~~~
 JsonFormatter class allows to save log records in the JSON format.
 During class initialisation, you can:
 
@@ -162,9 +158,9 @@ During class initialisation, you can:
     ch.setFormatter(formatter)
     logger.addHandler(ch)
 
-Overriding name of levels
-'''''''''''''''''''''''''
 
+Overriding name of levels
+^^^^^^^^^^^^^^^^^^^^^^^^^
 Name of levels can be overridden in the same way as in case of using the
 TextFormatter.
 
@@ -173,9 +169,9 @@ TextFormatter.
     formatter = JsonFormatter()
     formatter.override_level_names({'WARNING': 'WARN'})
 
-Usage
-~~~~~
 
+Usage
+-----
 Please, see the examples of usage in the ``examples`` directory.
 
 Log message as usual:
