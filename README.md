@@ -21,7 +21,7 @@ Using this package, you will be able to:
 - define only needed fields in records (JSON format)
 - create time of a record in Zulu format
 
-![Colored](https://github.com/vmig/pylogrus/examples/screenshot.png)
+![Colored](https://github.com/vmig/pylogrus/blob/master/examples/screenshot.png?raw=true)
 
 
 ## Quick start
