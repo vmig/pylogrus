@@ -24,11 +24,11 @@ def find_requirements(testing=False):
 
 setup(
     name="pylogrus",
-    version="0.3.2",
+    version="0.3.3",
     description="PyLogrus is a structured logger for Python which is inspired by Logrus Golang library",
     long_description=readme(),
     author="Vitalii Myhal",
-    author_email="xmig.mir@gmail.com",
+    author_email="6934861+vmig@users.noreply.github.com",
     url="https://github.com/vmig/pylogrus",
     license="MIT License",
     keywords="logger logging colorize output json extra fields",
