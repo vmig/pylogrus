@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import copy
 import re
 
 from .base import BaseFormatter
@@ -114,7 +115,8 @@ class TextFormatter(BaseFormatter):
             if key in colors:
                 self._color[True][key] = colors[key]
 
-    def format(self, record):
+    def format(self, original_record):
+        record = copy.copy(original_record)
         message = record.getMessage()
         if hasattr(record, 'prefix'):
             message = "{cl_pfx}{prefix}{cl_rst}{message}".format(
