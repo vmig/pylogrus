@@ -24,7 +24,7 @@ def find_requirements(testing=False):
 
 setup(
     name="pylogrus",
-    version="0.3.3",
+    version="0.3.4",
     description="PyLogrus is a structured logger for Python which is inspired by Logrus Golang library",
     long_description=readme(),
     author="Vitalii Myhal",
