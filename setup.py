@@ -24,8 +24,8 @@ def find_requirements(testing=False):
 
 setup(
     name="pylogrus",
-    version="0.3.4",
-    description="PyLogrus is a structured logger for Python which is inspired by Logrus Golang library",
+    version="0.4.0",
+    description="PyLogrus is a structured logger for Python",
     long_description=readme(),
     author="Vitalii Myhal",
     author_email="6934861+vmig@users.noreply.github.com",
@@ -43,7 +43,7 @@ setup(
         'test': find_requirements(testing=True)
     },
 
-    # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
+    # See https://pypi.org/pypi?%3Aaction=list_classifiers
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
@@ -56,6 +56,7 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5'
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6'
     ]
 )

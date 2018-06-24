@@ -3,6 +3,7 @@
 import abc
 import copy
 import logging
+import sys
 import time
 
 import six
@@ -82,9 +83,19 @@ class CustomAdapter(logging.LoggerAdapter, PyLogrusBase):
 
 class BaseFormatter(logging.Formatter):
 
+    default_time_format = '%Y-%m-%d %H:%M:%S'
+    default_msec_format = '%s,%03d'
+
     def __init__(self, fmt=None, datefmt=None, style='%'):
-        super(BaseFormatter, self).__init__(fmt=fmt, datefmt=datefmt, style=style)
-        self._level_names = {name: name for name in logging._levelToName.values()}
+        if hasattr(logging, '_levelToName'):  # PY3
+            self._level_names = {name: name for name in logging._levelToName.values()}
+        else:
+            self._level_names = {name: name for name in logging._levelNames.values() if isinstance(name, str)}
+
+        if sys.version_info >= (3, 2):  # Python version >= 3.2
+            super(BaseFormatter, self).__init__(fmt=fmt, datefmt=datefmt, style=style)
+        else:
+            super(BaseFormatter, self).__init__(fmt=fmt, datefmt=datefmt)
 
     def formatTime(self, record, datefmt=None):
         """Return the creation time of the specified LogRecord as formatted text.

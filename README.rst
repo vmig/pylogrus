@@ -117,7 +117,7 @@ define new color only for those elements you need.
 JsonFormatter
 ~~~~~~~~~~~~~
 JsonFormatter class allows to save log records in the JSON format.
-During class initialisation, you can:
+During class initialization, you can:
 
 -  Set time of log record in Zulu format. Just set ``datefmt`` argument
    as 'Z'.

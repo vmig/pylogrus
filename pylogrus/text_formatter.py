@@ -2,6 +2,9 @@
 
 import copy
 import re
+import sys
+
+import six
 
 from .base import BaseFormatter
 
@@ -56,7 +59,7 @@ class TextFormatter(BaseFormatter):
     def __init__(self, fmt=None, datefmt=None, style='%', colorize=True):
         """Initialize the formatter with specified format strings.
 
-        :param fmt: Format string
+        :param fmt: Format of string
         :type fmt: str
         :param datefmt: Date format (set as 'Z' to get the Zulu format)
         :type datefmt: str
@@ -149,6 +152,31 @@ class TextFormatter(BaseFormatter):
             level=self._level_names[record.levelname]
         )
 
+        return (self._format_py2, self._format_py3)[six.PY3](record)
+
+    def _format_py2(self, record):
+        try:
+            s = self._fmt % record.__dict__
+        except UnicodeDecodeError as e:
+            try:
+                record.name = record.name.decode('utf-8')
+                s = self._fmt % record.__dict__
+            except UnicodeDecodeError:
+                raise e
+        if record.exc_info:
+            if not record.exc_text:
+                record.exc_text = self.formatException(record.exc_info)
+        if record.exc_text:
+            if s[-1:] != "\n":
+                s = s + "\n"
+            try:
+                s = s + record.exc_text
+            except UnicodeError:
+                s = s + record.exc_text.decode(sys.getfilesystemencoding(), 'replace')
+
+        return s
+
+    def _format_py3(self, record):
         s = self.formatMessage(record)
 
         if record.exc_info and not record.exc_text:
