@@ -97,6 +97,18 @@ class TestTextFormatter(unittest.TestCase):
             else:
                 self.assertRegexpMatches(content, pattern)
 
+    def test_date_format_epoch(self):
+        formatter = TextFormatter(datefmt='U', colorize=False)
+        log = self.get_logger(formatter)
+        log.info("test a date in Unix epoch format")
+        with open(self.filename) as f:
+            content = f.readlines()[-1]
+            pattern = "^\[\d{10}\]"
+            if sys.version_info >= (3, 1):  # Python version >= 3.1
+                self.assertRegex(content, pattern)
+            else:
+                self.assertRegexpMatches(content, pattern)
+
     def test_date_format_zulu(self):
         formatter = TextFormatter(datefmt='Z', colorize=False)
         log = self.get_logger(formatter)
