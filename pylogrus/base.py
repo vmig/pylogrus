@@ -108,7 +108,7 @@ class BaseFormatter(logging.Formatter):
         if datefmt:
             if datefmt == 'Z':
                 t = time.strftime("%Y-%m-%dT%H:%M:%S", ct)
-                s = "{}.{:03.0f}Z".format(t, record.msecs)
+                s = "{}.{:03d}Z".format(t, int(record.msecs))
             else:
                 s = time.strftime(datefmt, ct)
         else:

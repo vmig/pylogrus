@@ -189,6 +189,22 @@ class TestTextFormatter(unittest.TestCase):
                           "\\xf0\\x9f\\x98\\x82"
                           "\\n", repr(content))
 
+    @unittest.skipIf(sys.version_info < (3, 2), "Not supported in this Python version")
+    def test_milliseconds_format_zulu(self):
+        old_factory = logging.getLogRecordFactory()
+
+        def record_factory(*args, **kwargs):
+            record = old_factory(*args, **kwargs)
+            record.msecs = 999.9999999999999
+            return record
+
+        logging.setLogRecordFactory(record_factory)
+
+        try:
+            self.test_date_format_zulu()
+        finally:
+            logging.setLogRecordFactory(old_factory)
+
 
 if __name__ == '__main__':
     unittest.main()
