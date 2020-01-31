@@ -106,12 +106,8 @@ class TestJsonFormatter(unittest.TestCase):
         with open(self.filename) as f:
             content = json.loads(f.readlines()[-1])
             pattern = '^\d{10}$'
-            if sys.version_info >= (3, 1):  # Python version >= 3.1
-                print(type(content['asctime']))
-                self.assertIsInstance(content['asctime'], int)
-                self.assertRegex(str(content['asctime']), pattern)
-            else:
-                self.assertRegexpMatches(content['asctime'], pattern)
+            self.assertIsInstance(content['asctime'], int)
+            self.assertTrue(1 <= content['asctime'] / 1000000000 < 2)
 
     def test_date_format_zulu(self):
         formatter = JsonFormatter(datefmt='Z')
