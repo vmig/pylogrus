@@ -102,13 +102,18 @@ class BaseFormatter(logging.Formatter):
 
         If ``datefmt`` (a string) is specified, it is used to format the creation time of the record.
         If ``datefmt`` is 'Z' then creation time of the record will be in Zulu Time Zone.
+        If ``datefmt`` is 'U' then creation time of the record will be in Unix epoch.
         Otherwise, the ISO8601 format is used.
         """
+
         ct = self.converter(record.created)
+
         if datefmt:
             if datefmt == 'Z':
                 t = time.strftime("%Y-%m-%dT%H:%M:%S", ct)
                 s = "{}.{:03.0f}Z".format(t, record.msecs)
+            elif datefmt == 'U':
+                s = int(time.mktime(ct))
             else:
                 s = time.strftime(datefmt, ct)
         else:

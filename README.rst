@@ -46,7 +46,8 @@ TextFormatter
 ~~~~~~~~~~~~~
 TextFormatter class allows colorizing console output by setting a
 ``colorize`` argument. The colorization can be switched off. Time of log
-record may be set in Zulu format. Just set ``datefmt`` argument as 'Z'.
+record may be set in Zulu format (just set ``datefmt`` argument as 'Z') or
+Unix epoch (set ``datefmt`` argument as 'U').
 
 .. code:: python
 
@@ -119,8 +120,8 @@ JsonFormatter
 JsonFormatter class allows to save log records in the JSON format.
 During class initialization, you can:
 
--  Set time of log record in Zulu format. Just set ``datefmt`` argument
-   as 'Z'.
+-  Set time of log record in Zulu format (set ``datefmt`` to 'Z') or
+   Unix epoch format (set ``datefmt`` to 'U').
 -  Define a list of enabled fields which will be present in a log record
    via ``enabled_fields`` argument. An enabled field is represented by
    original field name or by a tuple which contains the original name

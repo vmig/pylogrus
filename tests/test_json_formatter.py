@@ -99,6 +99,15 @@ class TestJsonFormatter(unittest.TestCase):
             else:
                 self.assertRegexpMatches(content['asctime'], pattern)
 
+    def test_date_format_epoch(self):
+        formatter = JsonFormatter(datefmt='U')
+        log = self.get_logger(formatter)
+        log.info("test a date in Unix epoch format")
+        with open(self.filename) as f:
+            content = json.loads(f.readlines()[-1])
+            self.assertIsInstance(content['asctime'], int)
+            self.assertTrue(1 <= content['asctime'] / 1000000000 < 2)
+
     def test_date_format_zulu(self):
         formatter = JsonFormatter(datefmt='Z')
         log = self.get_logger(formatter)
