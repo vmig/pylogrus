@@ -105,7 +105,6 @@ class TestJsonFormatter(unittest.TestCase):
         log.info("test a date in Unix epoch format")
         with open(self.filename) as f:
             content = json.loads(f.readlines()[-1])
-            pattern = '^\d{10}$'
             self.assertIsInstance(content['asctime'], int)
             self.assertTrue(1 <= content['asctime'] / 1000000000 < 2)
 
