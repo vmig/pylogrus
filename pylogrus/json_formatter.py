@@ -10,7 +10,7 @@ class JsonFormatter(BaseFormatter):
 
     __BASIC_FIELDS = ['name', 'asctime', 'levelname', 'message', 'exception', 'stacktrace']
 
-    def __init__(self, datefmt=None, enabled_fields=None, indent=None, sort_keys=False):
+    def __init__(self, datefmt=None, enabled_fields=None, indent=None, sort_keys=False, json_encoder=None):
         """Initialize the formatter with specified fields and date format.
 
         :param datefmt: Date format (set as 'Z' to get the Zulu format)
@@ -22,12 +22,15 @@ class JsonFormatter(BaseFormatter):
         :type indent: int
         :param sort_keys: Sort keys in log record
         :type sort_keys: bool
+        :param json_encoder: Custom JSON encoder class to be passed into json.dumps(...)
+        :type json_encoder: json.JSONEncoder
         :return: Log record as JSON string
         :rtype: str
         """
         super(JsonFormatter, self).__init__(datefmt=datefmt)
         self._indent = indent
         self._sort_keys = sort_keys
+        self._json_encoder = json_encoder
         self.__compose_record = partial(self.__prepare_record, enabled_fields=enabled_fields or self.__BASIC_FIELDS)
 
     def __prepare_record(self, record, enabled_fields):
@@ -81,7 +84,7 @@ class JsonFormatter(BaseFormatter):
 
         This is useful for pretty printing log records in the console.
         """
-        return json.dumps(obj, indent=self._indent, sort_keys=self._sort_keys)
+        return json.dumps(obj, indent=self._indent, sort_keys=self._sort_keys, cls=self._json_encoder)
 
     def format(self, record):
         if record.exc_info and not record.exc_text:
