@@ -2,6 +2,7 @@
 
 import unittest
 
+import datetime
 import json
 import logging
 import sys
@@ -12,10 +13,10 @@ from pylogrus import PyLogrus, JsonFormatter
 
 class TestJsonFormatter(unittest.TestCase):
 
-    def get_logger(self, formatter):
+    def get_logger(self, formatter, name=__name__):
         logging.setLoggerClass(PyLogrus)
 
-        logger = logging.getLogger(__name__)  # type: PyLogrus
+        logger = logging.getLogger(name)  # type: PyLogrus
         logger.setLevel(logging.DEBUG)
 
         fh = logging.FileHandler(self.filename)
@@ -186,6 +187,25 @@ class TestJsonFormatter(unittest.TestCase):
         with open(self.filename, 'rb') as f:
             content = json.loads(f.readlines()[-1])
             self.assertIn("\U0001f604 \U0001f601 \U0001f606 \U0001f605 \U0001f602", repr(content['message']))
+
+    def test_json_encoder(self):
+        class MyEncoder(json.JSONEncoder):
+            def default(self, obj):
+                if isinstance(obj, datetime.datetime):
+                    return obj.isoformat()
+                else:
+                    return super().default(obj)
+
+        formatter = JsonFormatter(json_encoder=MyEncoder)
+        log = self.get_logger(formatter, name="json-encoder")
+        now = datetime.datetime.now()
+        log.withFields({"some_datetime": now}).debug("TEST")
+        with open(self.filename) as f:
+            content = json.loads(f.readlines()[-1])
+            self.assertIn("some_datetime", content)
+            self.assertEqual(content["some_datetime"], now.isoformat())
+            self.assertIn("message", content)
+            self.assertEqual(content["message"], "TEST")
 
 
 if __name__ == '__main__':
